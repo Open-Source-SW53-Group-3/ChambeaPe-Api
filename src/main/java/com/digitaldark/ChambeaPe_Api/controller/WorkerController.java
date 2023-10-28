@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +31,23 @@ public class WorkerController {
     @GetMapping("/workers")
     public ResponseEntity<List<WorkerDTO>> getAllWorkersDTO() {
         return new ResponseEntity<List<WorkerDTO>>(workerService.getAllWorkers(), HttpStatus.OK);
+    }
+
+    //URL: http://localhost:8080/api/v1/workers/{id}
+    //Method: DELETE
+    @Transactional
+    @DeleteMapping("/workers/{id}")
+    public ResponseEntity<Object> deleteWorker(@PathVariable("id") int id) {
+        workerService.deleteWorker(id);
+        return new ResponseEntity<>("Worker was deleted successfully",HttpStatus.OK);
+    }
+
+    //URL: http://localhost:8080/api/v1/workers/{id}
+    //Method: PUT
+    @Transactional
+    @PutMapping("/workers/{id}")
+    public ResponseEntity<Object> updateWorker(@PathVariable("id") int id, @RequestBody WorkerDTO worker) {
+        workerService.updateWorker(id, worker);
+        return new ResponseEntity<>("Worker was updated successfully",HttpStatus.OK);
     }
 }

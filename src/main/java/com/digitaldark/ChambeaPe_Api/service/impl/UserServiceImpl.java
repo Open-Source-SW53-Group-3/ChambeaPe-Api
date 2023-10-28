@@ -1,9 +1,12 @@
 package com.digitaldark.ChambeaPe_Api.service.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
 
+import com.digitaldark.ChambeaPe_Api.dto.UserDTO;
 import com.digitaldark.ChambeaPe_Api.model.WorkerEntity;
 import com.digitaldark.ChambeaPe_Api.service.WorkerService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,9 @@ public class UserServiceImpl implements UserService {
     private EmployerService employerService;
 
     @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     private WorkerService workerService;
 
     @Override
@@ -32,34 +38,80 @@ public class UserServiceImpl implements UserService {
             throw new ValidationException("User already exists");
         } else if (userRepository.existsByEmailOrPhoneNumber(user.getEmail(), user.getPhoneNumber())) {
             throw new ValidationException("Email or phone number already exists");
+        } else if (!"M".equals(user.getGender()) && !"F".equals(user.getGender())) {
+            throw new ValidationException("Gender is invalid");
         }
 
         userRepository.save(user);
 
         if ("E".equals(user.getUserRole())) {
-            EmployerEntity employer = new EmployerEntity();
+            EmployerEntity employer = modelMapper.map(user, EmployerEntity.class);
             employer.setUser(user);
-            employer.setId(user.getId());
-            employer.setDateCreated(user.getDateCreated());
-            employer.setDateUpdated(user.getDateUpdated());
-            employer.setIsActive(user.getIsActive());
+            System.out.println("El valor de user es: " + employer);
+
             employerService.createEmployer(employer);
         } else if ("W".equals(user.getUserRole())) {
-            WorkerEntity worker = new WorkerEntity();
-            worker.setUser(user);
-            worker.setId(user.getId());
-            worker.setDateCreated(user.getDateCreated());
-            worker.setDateUpdated(user.getDateUpdated());
-            worker.setIsActive(user.getIsActive());
+            WorkerEntity worker = modelMapper.map(user, WorkerEntity.class);
             worker.setOccupation("");
-
+            worker.setUser(user);
+            System.out.println("El valor de user es: " + worker);
             workerService.createWorker(worker);
         } else {
             throw new ValidationException("userRole is invalid");
         }
 
+        return user;
+    }
+
+    @Override
+    public UserDTO createUserDTO(UserDTO user) {
+        if (userRepository.existsById(user.getId())) {
+            throw new ValidationException("User already exists");
+        } else if (userRepository.existsByEmailOrPhoneNumber(user.getEmail(), user.getPhoneNumber())) {
+            throw new ValidationException("Email or phone number already exists");
+        }
+
+        // Obtiene la hora actual en milisegundos
+        long currentTimeMillis = System.currentTimeMillis();
+
+        // Crea un objeto Timestamp con la hora actual
+        Timestamp timestamp = new Timestamp(currentTimeMillis);
+
+        UsersEntity userEntity = modelMapper.map(user, UsersEntity.class);
+        userEntity.setHasPremium( (byte) 0);
+        userEntity.setIsActive( (byte) 1);
+        userEntity.setDateCreated(timestamp);
+        userEntity.setDateUpdated(timestamp);
+
+
+        userRepository.save(userEntity);
+
+        if ("E".equals(userEntity.getUserRole())) {
+            EmployerEntity employer = modelMapper.map(userEntity, EmployerEntity.class);
+            employer.setUser(userEntity);
+            System.out.println("El valor de user es: " + employer);
+
+            employerService.createEmployer(employer);
+        } else if ("W".equals(userEntity.getUserRole())) {
+            WorkerEntity worker = modelMapper.map(userEntity, WorkerEntity.class);
+            worker.setOccupation("");
+            worker.setUser(userEntity);
+            System.out.println("El valor de user es: " + worker);
+            workerService.createWorker(worker);
+        } else {
+            throw new ValidationException("userRole is invalid");
+        }
 
         return user;
+    }
+
+    @Override
+    public UsersEntity getUser(int id) {
+        if (!userRepository.existsById(id)) {
+            throw new ValidationException("User does not exist");
+        }
+
+        return userRepository.findById(id);
     }
 
     @Override
@@ -68,11 +120,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersEntity getUserEmailAndPass(String email, String password) {
+    public UserDTO getUserEmailAndPass(String email, String password) {
         if (!userRepository.existsByEmailAndPassword(email, password)) {
             throw new ValidationException("Email or password is incorrect");
         }
+        UsersEntity user = userRepository.findByEmailAndPassword(email, password);
 
-        return userRepository.findByEmailAndPassword(email, password);
+        return modelMapper.map(user, UserDTO.class);
     }
+
+    @Override
+    public void deleteUser(int id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUser(int id, UsersEntity user) {
+        if (!userRepository.existsById(id)) {
+            throw new ValidationException("User does not exist");
+        }
+
+        userRepository.save(user);
+    }
+
+
 }

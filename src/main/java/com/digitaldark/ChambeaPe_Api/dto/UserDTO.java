@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployerDTO {
-
-    //Atributes from UserEntity
-
+public class UserDTO {
     private int id;
 
     private String firstName;
@@ -25,11 +24,13 @@ public class EmployerDTO {
 
     private String phoneNumber;
 
-    private byte hasPremium;
+    private Timestamp birthdate;
+
+    private String gender;
 
     private String profilePic;
 
-    private byte isActive;
-
     private String description;
+
+    private String userRole;
 }

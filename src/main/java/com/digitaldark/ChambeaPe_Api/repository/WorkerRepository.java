@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface WorkerRepository extends JpaRepository<WorkerEntity, Long> {
+public interface WorkerRepository extends JpaRepository<WorkerEntity, Integer> {
 
-    WorkerEntity findById(long id);
+    WorkerEntity findById(int id);
     List<WorkerEntity> findAll();
 }

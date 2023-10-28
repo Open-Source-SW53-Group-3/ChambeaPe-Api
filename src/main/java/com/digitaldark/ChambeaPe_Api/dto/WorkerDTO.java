@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkerDTO {
-
     //Atributes from UserEntity
 
     private int id;

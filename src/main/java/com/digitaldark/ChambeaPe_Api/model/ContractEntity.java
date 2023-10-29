@@ -43,11 +43,11 @@ public class ContractEntity {
     private byte isActive;
 
     @ManyToOne
-    @JoinColumn(name = "Worker_id", nullable = false,foreignKey = @ForeignKey(name = "FK_WORKER_ID"))
+    @JoinColumn(name = "Worker_id", nullable = false,foreignKey = @ForeignKey(name = "FK_CONTRACT_WORKER_ID"))
     private WorkerEntity worker;
 
     @OneToOne
-    @JoinColumn(name = "Posts_id", nullable = false,foreignKey = @ForeignKey(name = "FK_POST_ID"))
+    @JoinColumn(name = "Posts_id", nullable = false,foreignKey = @ForeignKey(name = "FK_CONTRACT_POST_ID"))
     private PostsEntity postObject;
 
 }

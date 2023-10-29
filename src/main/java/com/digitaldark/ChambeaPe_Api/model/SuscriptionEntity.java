@@ -35,9 +35,9 @@ public class SuscriptionEntity {
     @Column(name = "is_active", nullable = false)
     private byte isActive;
     @ManyToOne
-    @JoinColumn(name = "Premium_id", nullable = false,foreignKey = @ForeignKey(name = "FK_PREMIUM_ID"))
+    @JoinColumn(name = "Premium_id", nullable = false,foreignKey = @ForeignKey(name = "FK_SUSCRIPTION_PREMIUM_ID"))
     private PremiumEntity premiumObject;
     @ManyToOne
-    @JoinColumn(name = "User_id", nullable = false,foreignKey = @ForeignKey(name = "FK_USER_ID"))
+    @JoinColumn(name = "User_id", nullable = false,foreignKey = @ForeignKey(name = "FK_SUSCRIPTION_USER_ID"))
     private UsersEntity user;
 }

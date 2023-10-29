@@ -48,6 +48,6 @@ public class AdvertisementsEntity {
     private byte isActive;
 
     @ManyToOne
-    @JoinColumn(name = "Worker_id", nullable = false,foreignKey = @ForeignKey(name = "FK_Worker_ID"))
+    @JoinColumn(name = "Worker_id", nullable = false,foreignKey = @ForeignKey(name = "FK_ADVERTISEMENTS_WORKER_ID"))
     private WorkerEntity worker;
 }

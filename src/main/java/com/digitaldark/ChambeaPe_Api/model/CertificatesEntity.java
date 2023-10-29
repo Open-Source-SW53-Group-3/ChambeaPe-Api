@@ -48,6 +48,6 @@ public class CertificatesEntity {
     private byte isActive;
 
     @ManyToOne
-    @JoinColumn(name = "Worker_id", nullable = false,foreignKey = @ForeignKey(name = "FK_Worker_ID"))
+    @JoinColumn(name = "Worker_id", nullable = false,foreignKey = @ForeignKey(name = "FK_CERTICATES_WORKER_ID"))
     private WorkerEntity worker;
 }

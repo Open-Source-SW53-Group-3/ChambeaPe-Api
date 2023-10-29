@@ -33,6 +33,6 @@ public class EvidencesEntity {
     private byte isActive;
 
     @ManyToOne
-    @JoinColumn(name = "Claims_id", nullable = false, foreignKey = @ForeignKey(name = "FK_CLAIMS_ID"))
+    @JoinColumn(name = "Claims_id", nullable = false, foreignKey = @ForeignKey(name = "FK_EVIDENCES_CLAIMS_ID"))
     private ClaimsEntity claimObject;
 }

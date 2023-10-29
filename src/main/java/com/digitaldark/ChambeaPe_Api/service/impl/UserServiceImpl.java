@@ -2,8 +2,12 @@ package com.digitaldark.ChambeaPe_Api.service.impl;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.digitaldark.ChambeaPe_Api.dto.UserDTO;
+import com.digitaldark.ChambeaPe_Api.dto.request.UserLoginDTO;
+import com.digitaldark.ChambeaPe_Api.dto.request.UserRequestDTO;
+import com.digitaldark.ChambeaPe_Api.dto.response.UserResponseDTO;
+import com.digitaldark.ChambeaPe_Api.exception.ResourceNotFoundException;
 import com.digitaldark.ChambeaPe_Api.model.WorkerEntity;
 import com.digitaldark.ChambeaPe_Api.service.WorkerService;
 import org.modelmapper.ModelMapper;
@@ -64,12 +68,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO createUserDTO(UserDTO user) {
+    public UserResponseDTO createUserDTO(UserRequestDTO user) {
         if (userRepository.existsById(user.getId())) {
             throw new ValidationException("User already exists");
         } else if (userRepository.existsByEmailOrPhoneNumber(user.getEmail(), user.getPhoneNumber())) {
             throw new ValidationException("Email or phone number already exists");
         }
+
 
         // Obtiene la hora actual en milisegundos
         long currentTimeMillis = System.currentTimeMillis();
@@ -77,20 +82,21 @@ public class UserServiceImpl implements UserService {
         // Crea un objeto Timestamp con la hora actual
         Timestamp timestamp = new Timestamp(currentTimeMillis);
 
+        System.out.println("El valor de user es: " + user);
+
         UsersEntity userEntity = modelMapper.map(user, UsersEntity.class);
         userEntity.setHasPremium( (byte) 0);
         userEntity.setIsActive( (byte) 1);
         userEntity.setDateCreated(timestamp);
         userEntity.setDateUpdated(timestamp);
 
-
+        System.out.println("El valor de user es: " + userEntity);
         userRepository.save(userEntity);
 
         if ("E".equals(userEntity.getUserRole())) {
             EmployerEntity employer = modelMapper.map(userEntity, EmployerEntity.class);
             employer.setUser(userEntity);
             System.out.println("El valor de user es: " + employer);
-
             employerService.createEmployer(employer);
         } else if ("W".equals(userEntity.getUserRole())) {
             WorkerEntity worker = modelMapper.map(userEntity, WorkerEntity.class);
@@ -102,31 +108,39 @@ public class UserServiceImpl implements UserService {
             throw new ValidationException("userRole is invalid");
         }
 
-        return user;
+        return modelMapper.map(userEntity, UserResponseDTO.class);
     }
 
     @Override
-    public UsersEntity getUser(int id) {
+    public UserResponseDTO getUser(int id) {
         if (!userRepository.existsById(id)) {
-            throw new ValidationException("User does not exist");
+            throw new ResourceNotFoundException("User does not exist");
         }
+        UsersEntity user = userRepository.findById(id);
 
-        return userRepository.findById(id);
+        return modelMapper.map(user, UserResponseDTO.class);
     }
 
     @Override
-    public List<UsersEntity> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponseDTO> getAllUsers() {
+        List<UsersEntity> users = userRepository.findAll();
+
+        List<UserResponseDTO> usersDTO = users
+            .stream()
+            .map(user -> modelMapper.map(user, UserResponseDTO.class))
+            .collect(Collectors.toList());
+
+        return usersDTO;
     }
 
     @Override
-    public UserDTO getUserEmailAndPass(String email, String password) {
-        if (!userRepository.existsByEmailAndPassword(email, password)) {
-            throw new ValidationException("Email or password is incorrect");
+    public UserResponseDTO getUserEmailAndPass(UserLoginDTO userLoginDTO) {
+        if (!userRepository.existsByEmailAndPassword(userLoginDTO.getEmail(), userLoginDTO.getPassword())) {
+            throw new ResourceNotFoundException("Email or password is incorrect");
         }
-        UsersEntity user = userRepository.findByEmailAndPassword(email, password);
+        UsersEntity user = userRepository.findByEmailAndPassword(userLoginDTO.getEmail(), userLoginDTO.getPassword());
 
-        return modelMapper.map(user, UserDTO.class);
+        return modelMapper.map(user, UserResponseDTO.class);
     }
 
     @Override
@@ -137,7 +151,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(int id, UsersEntity user) {
         if (!userRepository.existsById(id)) {
-            throw new ValidationException("User does not exist");
+            throw new ResourceNotFoundException("User does not exist");
         }
 
         userRepository.save(user);

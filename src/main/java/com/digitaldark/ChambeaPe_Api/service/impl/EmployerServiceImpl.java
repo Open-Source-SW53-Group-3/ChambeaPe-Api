@@ -65,6 +65,12 @@ public class EmployerServiceImpl implements EmployerService {
 
     @Override
     public void updateEmployer(int id, EmployerDTO employer) {
+        if (!employerRepository.existsById(id)) {
+            throw new ValidationException("Employer does not exist");
+        }
+
+        validarEmployerDTO(employer);
+
         EmployerEntity employerEntity = modelMapper.map(employerRepository.findById(id), EmployerEntity.class);
         //System.out.println("v1: "+employerEntity);
         modelMapper.map(employer, employerEntity);
@@ -75,7 +81,6 @@ public class EmployerServiceImpl implements EmployerService {
 
         // Crea un objeto Timestamp con la hora actual
         Timestamp timestamp = new Timestamp(currentTimeMillis);
-        employerEntity.setDateCreated(timestamp);
         employerEntity.setDateUpdated(timestamp);
 
         //System.out.println(employerEntity);
@@ -84,9 +89,19 @@ public class EmployerServiceImpl implements EmployerService {
         //System.out.println("v1: "+user);
         modelMapper.map(employer, user);
         user.setId(id);
+        user.setDateUpdated(timestamp);
         //System.out.println(user);
 
         employerRepository.save(employerEntity);
         userRepository.save(user);
+    }
+
+    void validarEmployerDTO(EmployerDTO employerDTO){
+        if(employerDTO.getFirstName() == null
+                || employerDTO.getLastName() == null || employerDTO.getEmail() == null
+                || employerDTO.getPhoneNumber() == null || employerDTO.getProfilePic() == null
+                || employerDTO.getDescription() == null){
+            throw new ValidationException("Debe completar los campos requeridos");
+        }
     }
 }

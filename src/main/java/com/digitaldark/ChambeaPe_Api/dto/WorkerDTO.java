@@ -20,8 +20,6 @@ public class WorkerDTO {
 
     private String email;
 
-    private String password;
-
     private String phoneNumber;
 
     private byte hasPremium;

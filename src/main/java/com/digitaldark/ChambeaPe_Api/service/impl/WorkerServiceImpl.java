@@ -1,6 +1,7 @@
 package com.digitaldark.ChambeaPe_Api.service.impl;
 
 import com.digitaldark.ChambeaPe_Api.dto.WorkerDTO;
+import com.digitaldark.ChambeaPe_Api.exception.ResourceNotFoundException;
 import com.digitaldark.ChambeaPe_Api.exception.ValidationException;
 import com.digitaldark.ChambeaPe_Api.model.UsersEntity;
 import com.digitaldark.ChambeaPe_Api.model.WorkerEntity;
@@ -62,23 +63,38 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public void updateWorker(int id, WorkerDTO worker) {
+        if (!workerRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Worker does not exist");
+        }
+        System.out.println("El valor de worker es: " + worker);
+        validarWorkerDTO(worker);
+
         WorkerEntity workerEntity = modelMapper.map(workerRepository.findById(id), WorkerEntity.class);
         modelMapper.map(worker, workerEntity);
         workerEntity.setId(id);
+
         // Obtiene la hora actual en milisegundos
         long currentTimeMillis = System.currentTimeMillis();
 
         // Crea un objeto Timestamp con la hora actual
         Timestamp timestamp = new Timestamp(currentTimeMillis);
-        workerEntity.setDateCreated(timestamp);
         workerEntity.setDateUpdated(timestamp);
-
 
         UsersEntity user = modelMapper.map(userRepository.findById(id), UsersEntity.class);
         modelMapper.map(worker, user);
         user.setId(id);
+        user.setDateUpdated(timestamp);
 
         workerRepository.save(workerEntity);
         userRepository.save(user);
+    }
+
+    void validarWorkerDTO(WorkerDTO workerDTO){
+        if(workerDTO.getFirstName() == null
+                || workerDTO.getLastName() == null || workerDTO.getEmail() == null
+                || workerDTO.getPhoneNumber() == null || workerDTO.getProfilePic() == null
+                || workerDTO.getDescription() == null || workerDTO.getOccupation() == null){
+            throw new ValidationException("Debe completar los campos requeridos");
+        }
     }
 }

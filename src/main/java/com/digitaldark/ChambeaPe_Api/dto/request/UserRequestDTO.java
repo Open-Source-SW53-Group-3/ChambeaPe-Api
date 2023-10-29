@@ -1,18 +1,17 @@
-package com.digitaldark.ChambeaPe_Api.dto;
+package com.digitaldark.ChambeaPe_Api.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployerDTO {
-
-    //Atributes from UserEntity
-
+public class UserRequestDTO {
     private int id;
 
     private String firstName;
@@ -21,13 +20,17 @@ public class EmployerDTO {
 
     private String email;
 
+    private String password;
+
     private String phoneNumber;
 
-    private byte hasPremium;
+    private Timestamp birthdate;
+
+    private String gender;
 
     private String profilePic;
 
-    private byte isActive;
-
     private String description;
+
+    private String userRole;
 }

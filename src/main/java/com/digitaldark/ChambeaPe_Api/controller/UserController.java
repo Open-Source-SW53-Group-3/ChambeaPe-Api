@@ -1,7 +1,8 @@
 package com.digitaldark.ChambeaPe_Api.controller;
 
-
-import com.digitaldark.ChambeaPe_Api.dto.UserDTO;
+import com.digitaldark.ChambeaPe_Api.dto.request.UserLoginDTO;
+import com.digitaldark.ChambeaPe_Api.dto.request.UserRequestDTO;
+import com.digitaldark.ChambeaPe_Api.dto.response.UserResponseDTO;
 import com.digitaldark.ChambeaPe_Api.model.UsersEntity;
 import com.digitaldark.ChambeaPe_Api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,16 @@ public class UserController {
     //Method: GET
     @Transactional(readOnly = true)
     @GetMapping("/users")
-    public ResponseEntity<List<UsersEntity>> getUsers() {
-        return new ResponseEntity<List<UsersEntity>>(userService.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<List<UserResponseDTO>> getUsers() {
+        return new ResponseEntity<List<UserResponseDTO>>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    //URL: http://localhost:8080/api/v1/users
+    //URL: http://localhost:8080/api/v1/users/login
     //Method: GET
     @Transactional(readOnly = true)
-    @GetMapping("/users/login")
-    public ResponseEntity<UserDTO> getUserByEmailAndPass(@RequestParam("email") String email, @RequestParam("password") String password) {
-        return new ResponseEntity<UserDTO>(userService.getUserEmailAndPass(email, password), HttpStatus.OK);
+    @PostMapping("/users/login")
+    public ResponseEntity<UserResponseDTO> getUserByEmailAndPass(@RequestBody UserLoginDTO userLoginDTO) {
+        return new ResponseEntity<UserResponseDTO>(userService.getUserEmailAndPass(userLoginDTO), HttpStatus.OK);
     }
 
     //URL: http://localhost:8080/api/v1/users
@@ -51,11 +52,11 @@ public class UserController {
     //Method: POST
     @Transactional
     @PostMapping("/users")
-    public ResponseEntity<UserDTO> createUserDTO(@RequestBody UserDTO user) {
+    public ResponseEntity<UserResponseDTO> createUserDTO(@RequestBody UserRequestDTO user) {
 
         System.out.println("Se creo un usuario: " + user);
 
-        return new ResponseEntity<UserDTO>(userService.createUserDTO(user), HttpStatus.CREATED);
+        return new ResponseEntity<UserResponseDTO>(userService.createUserDTO(user), HttpStatus.CREATED);
     }
 
 

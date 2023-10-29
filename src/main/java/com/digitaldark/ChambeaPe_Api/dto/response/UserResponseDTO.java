@@ -1,4 +1,4 @@
-package com.digitaldark.ChambeaPe_Api.dto;
+package com.digitaldark.ChambeaPe_Api.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+public class UserResponseDTO {
     private int id;
 
     private String firstName;
@@ -19,8 +19,6 @@ public class UserDTO {
     private String lastName;
 
     private String email;
-
-    private String password;
 
     private String phoneNumber;
 

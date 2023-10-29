@@ -29,6 +29,6 @@ public class EmployerEntity {
     private byte isActive;
 
     @OneToOne
-    @JoinColumn(name = "User_id", nullable = false,foreignKey = @ForeignKey(name = "FK_USER_ID"))
+    @JoinColumn(name = "User_id", nullable = false,foreignKey = @ForeignKey(name = "FK_EMPLOYER_USER_ID"))
     private UsersEntity user;
 }

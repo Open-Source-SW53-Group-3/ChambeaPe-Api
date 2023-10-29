@@ -34,11 +34,11 @@ public class ChatEntity {
     private byte isActive;
 
     @ManyToOne
-    @JoinColumn(name = "Worker_id", nullable = false, foreignKey = @ForeignKey(name = "FK_WORKER_ID"))
+    @JoinColumn(name = "Worker_id", nullable = false, foreignKey = @ForeignKey(name = "FK_CHAT_WORKER_ID"))
     private WorkerEntity worker;
 
     @ManyToOne
-    @JoinColumn(name = "Employer_id", nullable = false, foreignKey = @ForeignKey(name = "FK_EMPLOYER_ID"))
+    @JoinColumn(name = "Employer_id", nullable = false, foreignKey = @ForeignKey(name = "FK_CHAT_EMPLOYER_ID"))
     private EmployerEntity employer;
 
     @ManyToOne

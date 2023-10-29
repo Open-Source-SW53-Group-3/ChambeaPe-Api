@@ -33,6 +33,6 @@ public class ServiceEntity {
     private byte isActive;
 
     @OneToOne
-    @JoinColumn(name = "Contract_id", nullable = false, foreignKey = @ForeignKey(name = "FK_CONTRACT_ID"))
+    @JoinColumn(name = "Contract_id", nullable = false, foreignKey = @ForeignKey(name = "FK_SERVICES_CONTRACT_ID"))
     private ContractEntity contractObject;
 }

@@ -45,6 +45,6 @@ public class PostsEntity {
     private byte isActive;
 
     @ManyToOne
-    @JoinColumn(name = "Employer_id", nullable = false,foreignKey = @ForeignKey(name = "FK_Employer_ID"))
+    @JoinColumn(name = "Employer_id", nullable = false,foreignKey = @ForeignKey(name = "FK_POSTS_EMPLOYER_ID"))
     private EmployerEntity employer;
 }

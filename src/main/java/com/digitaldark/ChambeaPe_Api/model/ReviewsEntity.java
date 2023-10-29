@@ -39,10 +39,10 @@ public class ReviewsEntity {
     private byte isActive;
 
     @ManyToOne
-    @JoinColumn(name = "Employer_id", nullable = false , foreignKey = @ForeignKey(name = "FK_EMPLOYER_ID"))
+    @JoinColumn(name = "Employer_id", nullable = false , foreignKey = @ForeignKey(name = "FK_REVIEWS_EMPLOYER_ID"))
     private EmployerEntity employer;
 
     @ManyToOne
-    @JoinColumn(name = "Worker_id", nullable = false, foreignKey = @ForeignKey(name = "FK_WORKER_ID"))
+    @JoinColumn(name = "Worker_id", nullable = false, foreignKey = @ForeignKey(name = "FK_REVIEWS_WORKER_ID"))
     private WorkerEntity worker;
 }

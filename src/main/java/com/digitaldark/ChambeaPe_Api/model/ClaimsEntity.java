@@ -33,11 +33,11 @@ public class ClaimsEntity {
     private byte isActive;
 
     @ManyToOne
-    @JoinColumn(name = "Message_id", nullable = false , foreignKey = @ForeignKey(name = "FK_MESSAGE_ID"))
+    @JoinColumn(name = "Message_id", nullable = false , foreignKey = @ForeignKey(name = "FK_CLAIMS_MESSAGE_ID"))
     private MessageEntity messageObject;
 
     @OneToOne
-    @JoinColumn(name = "Chat_id", nullable = false, foreignKey = @ForeignKey(name = "FK_CHAT_ID"))
+    @JoinColumn(name = "Chat_id", nullable = false, foreignKey = @ForeignKey(name = "FK_CLAIMS_CHAT_ID"))
     private ChatEntity chatObject;
 
 }

@@ -33,7 +33,7 @@ public class UserNotificationsEntity {
     private byte isActive;
 
     @ManyToOne
-    @JoinColumn(name = "User_id", nullable = false,foreignKey = @ForeignKey(name = "FK_USER_ID"))
+    @JoinColumn(name = "User_id", nullable = false,foreignKey = @ForeignKey(name = "FK_NOTIFICATIONS_USER_ID"))
     private UsersEntity user;
 
     @ManyToOne

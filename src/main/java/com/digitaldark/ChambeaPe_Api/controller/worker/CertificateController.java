@@ -5,7 +5,7 @@ import com.digitaldark.ChambeaPe_Api.dto.worker.request.CertificateRequestDTO;
 import com.digitaldark.ChambeaPe_Api.dto.worker.response.CertificateResponseDTO;
 import com.digitaldark.ChambeaPe_Api.model.CertificatesEntity;
 import com.digitaldark.ChambeaPe_Api.service.CertificateService;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,6 @@ import java.util.List;
 public class CertificateController {
     @Autowired
     private CertificateService certificateService;
-    private ModelMapper modelMapper;
 
     //URL: http://localhost:8080/api/v1/users/{id}/certificates
     //Method: GET ALL
@@ -33,9 +32,7 @@ public class CertificateController {
     //URL: http://localhost:8080/api/v1/users/{id}/certificates
     @Transactional
     @PostMapping("/users/{id}/certificates")
-    public ResponseEntity<CertificateResponseDTO> createCertificate(
-            @RequestBody CertificateRequestDTO certificate,
-            @PathVariable(value = "id") int userId) {
+    public ResponseEntity<CertificateResponseDTO> createCertificate(@RequestBody CertificateRequestDTO certificate, @PathVariable(value = "id") int userId) {
         return new ResponseEntity<CertificateResponseDTO>(certificateService.createCertificate(certificate, userId), HttpStatus.CREATED);
     }
 

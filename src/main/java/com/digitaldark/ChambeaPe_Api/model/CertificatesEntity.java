@@ -20,10 +20,10 @@ public class CertificatesEntity {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "name", nullable = false, length = 20)
-    private String name;
+    @Column(name = "user_name", nullable = false, length = 60)
+    private String userName;
 
-    @Column(name = "imgUrl", nullable = false, length = 250)
+    @Column(name = "img_url", nullable = false, length = 250)
     private String imgUrl;
 
     @Column(name = "institution_name", nullable = false, length = 60)

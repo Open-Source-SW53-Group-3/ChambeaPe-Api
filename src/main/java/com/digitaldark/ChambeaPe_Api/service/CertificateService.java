@@ -3,7 +3,6 @@ package com.digitaldark.ChambeaPe_Api.service;
 import com.digitaldark.ChambeaPe_Api.dto.worker.request.CertificateRequestDTO;
 import com.digitaldark.ChambeaPe_Api.dto.worker.response.CertificateResponseDTO;
 import com.digitaldark.ChambeaPe_Api.model.CertificatesEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 public interface CertificateService {

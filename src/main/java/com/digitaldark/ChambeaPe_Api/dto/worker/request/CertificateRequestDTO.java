@@ -1,11 +1,11 @@
 package com.digitaldark.ChambeaPe_Api.dto.worker.request;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-
 
 @Data
 @Builder
@@ -18,5 +18,4 @@ public class CertificateRequestDTO {
     private String institutionName;
     private String teacherName;
     private Timestamp issueDate;
-    private String CertificateName;
 }

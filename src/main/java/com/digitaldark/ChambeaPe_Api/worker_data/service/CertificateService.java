@@ -8,9 +8,8 @@ import java.util.List;
 public interface CertificateService {
 
     public abstract CertificateResponseDTO createCertificate(CertificateRequestDTO certificate, int id);
-    public abstract CertificatesEntity updateCertificate(int id, CertificatesEntity certificate);
+    public abstract CertificateResponseDTO getCertificateById(int id);
+    public abstract List<CertificateResponseDTO> getAllCertificatesByWorkerId(int id);
+    public abstract CertificateResponseDTO updateCertificate(int id, CertificateRequestDTO certificate);
     public abstract void deleteCertificateById(int id);
-    public abstract CertificateResponseDTO getCertificate(int id);
-    public abstract List<CertificatesEntity> getAllCertificates();
-    public abstract List<CertificatesEntity> getAllCertificatesByWorkerId(int id);
 }

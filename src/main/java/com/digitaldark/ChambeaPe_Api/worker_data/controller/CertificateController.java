@@ -24,8 +24,8 @@ public class CertificateController {
     //Method: GET ALL
     @Transactional(readOnly = true)
     @GetMapping("/users/{id}/certificates")
-    public ResponseEntity<List<CertificatesEntity>> getAllCertificatesByUser(@PathVariable(value = "id") int userId) {
-        return new ResponseEntity<List<CertificatesEntity>>(certificateService.getAllCertificatesByWorkerId(userId), HttpStatus.OK);
+    public ResponseEntity<List<CertificateResponseDTO>> getAllCertificatesByWorkerId(@PathVariable(value = "id") int userId) {
+        return new ResponseEntity<List<CertificateResponseDTO>>(certificateService.getAllCertificatesByWorkerId(userId), HttpStatus.OK);
     }
 
     //Method : Post
@@ -36,4 +36,35 @@ public class CertificateController {
         return new ResponseEntity<CertificateResponseDTO>(certificateService.createCertificate(certificate, userId), HttpStatus.CREATED);
     }
 
+    //method: Get
+    //URL: http://localhost:8080/api/v1/users/{id}/certificates/{id}
+    @Transactional(readOnly = true)
+    @GetMapping("/users/{userId}/certificates/{certificateId}")
+    public ResponseEntity<CertificateResponseDTO> getCertificateById(
+            @PathVariable(value = "certificateId") int certificateId) {
+        return new ResponseEntity<CertificateResponseDTO>(certificateService.getCertificateById(certificateId), HttpStatus.OK);
+    }
+
+    //method: Put
+    //URL: http://localhost:8080/api/v1/users/{id}/certificates/{id}
+    @Transactional
+    @PutMapping("/users/{userId}/certificates/{certificateId}")
+    public ResponseEntity<CertificateResponseDTO> updateCertificate(
+            @PathVariable(value = "userId") int userId,
+            @PathVariable(value = "certificateId") int certificateId,
+            @RequestBody CertificateRequestDTO certificateDetails) {
+        return new ResponseEntity<CertificateResponseDTO>(certificateService.updateCertificate(certificateId, certificateDetails), HttpStatus.OK);
+    }
+
+
+    //method: Delete
+    //URL: http://localhost:8080/api/v1/users/{id}/certificates/{id}
+    @Transactional
+    @DeleteMapping("/users/{userId}/certificates/{certificateId}")
+    public ResponseEntity<?> deleteCertificate(
+            @PathVariable(value = "userId") int userId,
+            @PathVariable(value = "certificateId") int certificateId) {
+        certificateService.deleteCertificateById(certificateId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

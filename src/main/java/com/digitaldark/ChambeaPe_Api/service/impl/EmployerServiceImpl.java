@@ -1,7 +1,6 @@
 package com.digitaldark.ChambeaPe_Api.service.impl;
 
 import com.digitaldark.ChambeaPe_Api.dto.EmployerDTO;
-import com.digitaldark.ChambeaPe_Api.dto.WorkerDTO;
 import com.digitaldark.ChambeaPe_Api.exception.ValidationException;
 import com.digitaldark.ChambeaPe_Api.model.EmployerEntity;
 import com.digitaldark.ChambeaPe_Api.model.UsersEntity;

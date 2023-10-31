@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -59,33 +61,42 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public CertificatesEntity updateCertificate(int id, CertificatesEntity certificate) {
-        return null;
-    }
-
-    @Override
-    public void deleteCertificateById(int id) {
-        certificateRepository.deleteById(id);
-    }
-
-    @Override
-    public CertificateResponseDTO getCertificate(int id) {
-        if(!certificateRepository.existsById(id)){
-            throw new ValidationException("Certificate does not exist");
-        }
-        return modelMapper.map(certificateRepository.findById(id), CertificateResponseDTO.class);
-    }
-
-    @Override
-    public List<CertificatesEntity> getAllCertificates() {
-        return certificateRepository.findAll();
-    }
-
-    @Override
-    public List<CertificatesEntity> getAllCertificatesByWorkerId(int id) {
+    public List<CertificateResponseDTO> getAllCertificatesByWorkerId(int id) {
         if(!certificateRepository.existsByWorkerId(id)){
             throw new ValidationException("Worker does not exist");
         }
-        return certificateRepository.findAllByWorkerId(id);
+        List<CertificatesEntity> certificateEntities = certificateRepository.findAllByWorkerId(id);
+        return certificateEntities.stream()
+                .map(certificateEntity -> modelMapper.map(certificateEntity, CertificateResponseDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public CertificateResponseDTO getCertificateById(int id) {
+        if(!certificateRepository.existsById(id)){
+            throw new ValidationException("Certificate does not exist");
+        }
+        Optional<CertificatesEntity> certificateEntity = certificateRepository.findById(id);
+        return modelMapper.map(certificateEntity, CertificateResponseDTO.class);
+    }
+    @Override
+    public CertificateResponseDTO updateCertificate(int id, CertificateRequestDTO certificate) {
+        if(!certificateRepository.existsById(id)){
+            throw new ValidationException("Certificate does not exist");
+        }
+
+        CertificatesEntity certificateEntity = certificateRepository.findById(id).get();
+        certificateEntity.setCertificateName(certificate.getCertificateName());
+        certificateEntity.setInstitutionName(certificate.getInstitutionName());
+        certificateEntity.setIssueDate(certificate.getIssueDate());
+        certificateEntity.setImgUrl(certificate.getImgUrl());
+        certificateEntity.setDateUpdated(new Timestamp(System.currentTimeMillis()));
+        certificateRepository.save(certificateEntity);
+        return modelMapper.map(certificateEntity, CertificateResponseDTO.class);
+
+    }
+    @Override
+    public void deleteCertificateById(int id) {
+        certificateRepository.deleteById(id);
     }
 }

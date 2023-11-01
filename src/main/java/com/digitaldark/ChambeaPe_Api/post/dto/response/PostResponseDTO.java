@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostResponseDTO {
+<<<<<<< Updated upstream
+=======
+    private int id;
+>>>>>>> Stashed changes
     private String title;
     private String description;
     private String subtitle;

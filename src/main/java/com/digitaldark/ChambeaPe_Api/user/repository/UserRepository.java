@@ -2,7 +2,6 @@ package com.digitaldark.ChambeaPe_Api.user.repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.digitaldark.ChambeaPe_Api.user.model.UsersEntity;
 
 public interface UserRepository extends JpaRepository<UsersEntity, Integer> {

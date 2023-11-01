@@ -30,11 +30,8 @@ public class PostsEntity {
     @Column(name = "subtitle", nullable = false, length = 30)
     private String subtitle;
 
-    @Column(name = "imgUrl", nullable = false, length = 255)
+    @Column(name = "img_url", nullable = false, length = 255)
     private String imgUrl;
-
-    @Column(name = "Employer_id", nullable = false,insertable=false, updatable=false)
-    private int employerId;
 
     @Column(name = "Date_created", nullable = false)
     private Timestamp dateCreated;

@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
 public class CertificateController {
     @Autowired
     private CertificateService certificateService;
@@ -55,7 +56,6 @@ public class CertificateController {
             @RequestBody CertificateRequestDTO certificateDetails) {
         return new ResponseEntity<CertificateResponseDTO>(certificateService.updateCertificate(certificateId, certificateDetails), HttpStatus.OK);
     }
-
 
     //method: Delete
     //URL: http://localhost:8080/api/v1/users/{id}/certificates/{id}

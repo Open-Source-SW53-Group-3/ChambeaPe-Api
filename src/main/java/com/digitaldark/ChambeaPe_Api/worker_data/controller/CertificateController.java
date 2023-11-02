@@ -56,7 +56,6 @@ public class CertificateController {
         return new ResponseEntity<CertificateResponseDTO>(certificateService.updateCertificate(certificateId, certificateDetails), HttpStatus.OK);
     }
 
-
     //method: Delete
     //URL: http://localhost:8080/api/v1/users/{id}/certificates/{id}
     @Transactional

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostResponseDTO {
+    private int id;
     private String title;
     private String description;
     private String subtitle;

@@ -89,7 +89,6 @@ public class PostulationServiceImpl implements PostulationService {
         if (!postulationRepository.existsById(id)) {
             throw new ResourceNotFoundException("Postulation not found");
         }
-
         PostulationsEntity postulationEntity = postulationRepository.findById(id);
 
         postulationEntity.setIsAccepted( (byte) 1);

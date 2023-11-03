@@ -10,6 +10,7 @@ public interface CertificateRepository extends JpaRepository<CertificatesEntity,
 
     CertificatesEntity findByUserName(String name );
     boolean existsByWorkerId(int id);
+
     List<CertificatesEntity> findAllByWorkerId(int id);
 
 }

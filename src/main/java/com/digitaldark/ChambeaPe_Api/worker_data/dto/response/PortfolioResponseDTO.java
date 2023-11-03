@@ -6,15 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CertificateResponseDTO {
-    private String userName;
-    private String certificateName;
-    private String imgUrl;
-    private String institutionName;
-    private String teacherName;
-    private Timestamp issueDate;
+public class PortfolioResponseDTO {
+    private String imageUrl;
+    private Timestamp dateCreated;
 }

@@ -1,5 +1,6 @@
 package com.digitaldark.ChambeaPe_Api.worker_data.service.impl;
 
+import com.digitaldark.ChambeaPe_Api.shared.DateTimeEntity;
 import com.digitaldark.ChambeaPe_Api.worker_data.dto.request.CertificateRequestDTO;
 import com.digitaldark.ChambeaPe_Api.worker_data.dto.response.CertificateResponseDTO;
 import com.digitaldark.ChambeaPe_Api.shared.exception.ValidationException;
@@ -32,6 +33,9 @@ public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private DateTimeEntity dateTimeEntity;
+
     @Override
     public CertificateResponseDTO createCertificate(CertificateRequestDTO certificate, int id) {
         //UsersEntity userEntity = modelMapper.map(user, UsersEntity.class);
@@ -39,16 +43,8 @@ public class CertificateServiceImpl implements CertificateService {
         CertificatesEntity certificateEntity = modelMapper.map(certificate, CertificatesEntity.class);
         System.out.println("El valor de CertificateEntity: " + certificateEntity);
 
-
-        // Obtiene la hora actual en milisegundos
-        long currentTimeMillis = System.currentTimeMillis();
-
-        // Crea un objeto Timestamp con la hora actual
-        Timestamp timestamp = new Timestamp(currentTimeMillis);
-
-        System.out.println("pasa el map");
-        certificateEntity.setDateCreated(timestamp);
-        certificateEntity.setDateUpdated(timestamp);
+        certificateEntity.setDateCreated(dateTimeEntity.currentTime());
+        certificateEntity.setDateUpdated(dateTimeEntity.currentTime());
         certificateEntity.setWorker(workerRepository.findById(id));
         certificateEntity.setUserName(userRepository.findById(id).getFirstName()+" "+userRepository.findById(id).getLastName());
         certificateEntity.setIsActive((byte) 1);
@@ -90,7 +86,7 @@ public class CertificateServiceImpl implements CertificateService {
         certificateEntity.setInstitutionName(certificate.getInstitutionName());
         certificateEntity.setIssueDate(certificate.getIssueDate());
         certificateEntity.setImgUrl(certificate.getImgUrl());
-        certificateEntity.setDateUpdated(new Timestamp(System.currentTimeMillis()));
+        certificateEntity.setDateUpdated(dateTimeEntity.currentTime());
         certificateRepository.save(certificateEntity);
         return modelMapper.map(certificateEntity, CertificateResponseDTO.class);
 

@@ -17,7 +17,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
+//@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired

@@ -21,7 +21,7 @@ public class SkillController {
     //URL: http://localhost:8080/api/v1/workers/{id}/skills
     //Method: GET ALL
     @Transactional(readOnly = true)
-    @GetMapping("/{id}/certificates")
+    @GetMapping("/{id}/skills")
     public ResponseEntity<List<SkillResponseDTO>> getAllSkillsByWorkerId(@PathVariable(value = "id") int userId) {
         return new ResponseEntity<List<SkillResponseDTO>>(skillService.getAllSkillsByWorkerId(userId), HttpStatus.OK);
     }

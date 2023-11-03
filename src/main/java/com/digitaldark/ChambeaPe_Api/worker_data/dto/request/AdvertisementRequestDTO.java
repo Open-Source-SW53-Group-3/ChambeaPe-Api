@@ -6,17 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CertificateRequestDTO {
+public class AdvertisementRequestDTO {
+    private String category;
+    private String text;
+    private Timestamp endDate;
 
-    private String certificateName;
-    private String imgUrl;
-    private String institutionName;
-    private String teacherName;
-    private Timestamp issueDate;
+    private String pictureUrl;
 
 }

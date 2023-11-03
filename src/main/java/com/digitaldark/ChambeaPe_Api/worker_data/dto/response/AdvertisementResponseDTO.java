@@ -10,11 +10,11 @@ import java.sql.Timestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CertificateResponseDTO {
-    private String userName;
-    private String certificateName;
-    private String imgUrl;
-    private String institutionName;
-    private String teacherName;
-    private Timestamp issueDate;
+public class AdvertisementResponseDTO {
+    private String category;
+    private String text;
+    private Timestamp startDate;
+    private Timestamp endDate;
+    private String pictureUrl;
+
 }

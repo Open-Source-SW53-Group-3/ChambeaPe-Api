@@ -42,8 +42,4 @@ public class ChatEntity {
     @ManyToOne
     @JoinColumn(name = "Employer_id", nullable = false, foreignKey = @ForeignKey(name = "FK_CHAT_EMPLOYER_ID"))
     private EmployerEntity employer;
-
-    @ManyToOne
-    @JoinColumn(name = "Message_id", nullable = false, foreignKey = @ForeignKey(name = "FK_MESSAGE_ID"))
-    private MessageEntity messageObject;
 }

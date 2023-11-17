@@ -53,6 +53,18 @@ public class EmployerServiceImpl implements EmployerService {
     }
 
     @Override
+    public EmployerDTO getEmployerById(int id) {
+        if (!employerRepository.existsById(id)) {
+            throw new ValidationException("Employer does not exist");
+        }
+
+        EmployerEntity employerEntity = employerRepository.findById(id);
+        EmployerDTO employerDTO = modelMapper.map(employerEntity, EmployerDTO.class);
+        modelMapper.map(employerEntity.getUser(), employerDTO);
+        return employerDTO;
+    }
+
+    @Override
     public void deleteEmployer(int id) {
         if (!employerRepository.existsById(id)) {
             throw new ValidationException("Employer does not exist");

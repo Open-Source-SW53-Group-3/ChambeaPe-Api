@@ -36,6 +36,14 @@ public class EmployerController {
     }
 
     //URL: http://localhost:8080/api/v1/employers/{id}
+    //Method: GET
+    @Transactional(readOnly = true)
+    @GetMapping("/employers/{id}")
+    public ResponseEntity<EmployerDTO> getEmployerById(@PathVariable("id") int id) {
+        return new ResponseEntity<EmployerDTO>(employerService.getEmployerById(id), HttpStatus.OK);
+    }
+
+    //URL: http://localhost:8080/api/v1/employers/{id}
     //Method: DELETE
     @Transactional
     @DeleteMapping("/employers/{id}")

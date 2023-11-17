@@ -35,13 +35,13 @@ public class PostulationController {
         return new ResponseEntity<PostulationResponseDTO>(postulationService.createPostulation(postId, workerId,postulation), HttpStatus.CREATED);
     }
 
-    //URL: http://localhost:8080/api/v1/postulations/{id}
+    //URL: http://localhost:8080/api/v1/posts/{postId}/postulations
     //Method: DELETE
     @Transactional
-    @DeleteMapping("/postulations/{id}")
-    public ResponseEntity<Object> deletePostulation( @PathVariable("id") int id) {
-        postulationService.deletePostulation(id);
-        return new ResponseEntity<>("Postulation was deleted successfully",HttpStatus.OK);
+    @DeleteMapping("/posts/{postId}/postulations/{workerId}")
+    public ResponseEntity<Object> deletePostulation(@PathVariable("postId") int postId, @PathVariable("workerId") int workerId) {
+        postulationService.deletePostulation(postId, workerId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //URL: http://localhost:8080/api/v1/postulations/{id}

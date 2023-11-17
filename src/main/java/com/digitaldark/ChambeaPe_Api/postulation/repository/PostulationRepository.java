@@ -12,4 +12,5 @@ public interface PostulationRepository extends JpaRepository<PostulationsEntity,
     boolean existsById(int id);
     PostulationsEntity findById(int id);
     boolean existsByPostAndWorker(PostsEntity post, WorkerEntity worker);
+    PostulationsEntity findByPostAndWorker(PostsEntity post, WorkerEntity worker);
 }

@@ -15,6 +15,7 @@ import com.digitaldark.ChambeaPe_Api.user.repository.WorkerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,14 +80,22 @@ public class PostulationServiceImpl implements PostulationService {
         return postulationResponseDTO;
     }
 
+    @CrossOrigin(origins = "*")
     @Override
-    public void deletePostulation(int id) {
-        if (!postulationRepository.existsById(id)) {
+    public void deletePostulation(int postId, int workerId) {
+        if (!postRepository.existsById(postId)) {
+            throw new ResourceNotFoundException("Post not found");
+        }
+        else if (!workerRepository.existsById(workerId)) {
+            throw new ResourceNotFoundException("Worker not found");
+        }
+        PostulationsEntity postulationEntity = postulationRepository.findByPostAndWorker(postRepository.findById(postId), workerRepository.findById(workerId));
+        if(postulationEntity == null){
             throw new ResourceNotFoundException("Postulation not found");
         }
-
-        postulationRepository.deleteById(id);
+        postulationRepository.deleteById(postulationEntity.getId());
     }
+
 
     @Override
     public void updatePostulation(int id) {

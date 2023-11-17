@@ -13,7 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
+//@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
+@CrossOrigin(origins = "*")
 public class EmployerController {
    @Autowired
     private EmployerService employerService;
@@ -32,6 +33,14 @@ public class EmployerController {
     @GetMapping("/employers")
     public ResponseEntity<List<EmployerDTO>> getAllEmployersDTO() {
         return new ResponseEntity<List<EmployerDTO>>(employerService.getAllEmployers(), HttpStatus.OK);
+    }
+
+    //URL: http://localhost:8080/api/v1/employers/{id}
+    //Method: GET
+    @Transactional(readOnly = true)
+    @GetMapping("/employers/{id}")
+    public ResponseEntity<EmployerDTO> getEmployerById(@PathVariable("id") int id) {
+        return new ResponseEntity<EmployerDTO>(employerService.getEmployerById(id), HttpStatus.OK);
     }
 
     //URL: http://localhost:8080/api/v1/employers/{id}

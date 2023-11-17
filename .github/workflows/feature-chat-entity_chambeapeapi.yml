@@ -1,12 +1,12 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - ChambeaPeAPI
+name: Build and deploy JAR app to Azure Web App - ChambeaPeApi
 
 on:
   push:
     branches:
-      - develop
+      - feature/chat-entity
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v1
         with:
-          java-version: '8'
+          java-version: '17'
 
       - name: Build with Maven
         run: mvn clean install
@@ -47,7 +47,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ChambeaPeAPI'
+          app-name: 'ChambeaPeApi'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7C37B4BA817A48B89D2C1E365F2FF9FD }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_97023F46C13D48B6B34DEC8D220638ED }}
           package: '*.jar'

@@ -33,6 +33,7 @@ public class PostulationServiceImpl implements PostulationService {
     @Autowired
     private DateTimeEntity dateTimeEntity;
 
+    @Override
     public List<PostulationResponseDTO> getAllPostulationsByPost(int postId) {
         PostsEntity postEntity = postRepository.findById(postId);
 
@@ -47,6 +48,7 @@ public class PostulationServiceImpl implements PostulationService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public PostulationResponseDTO createPostulation(int postId, int workerId, PostulationRequestDTO postulation) {
         if (!postRepository.existsById(postId)) {
             throw new ResourceNotFoundException("Post not found");
@@ -77,6 +79,7 @@ public class PostulationServiceImpl implements PostulationService {
         return postulationResponseDTO;
     }
 
+    @Override
     public void deletePostulation(int id) {
         if (!postulationRepository.existsById(id)) {
             throw new ResourceNotFoundException("Postulation not found");
@@ -85,6 +88,7 @@ public class PostulationServiceImpl implements PostulationService {
         postulationRepository.deleteById(id);
     }
 
+    @Override
     public void updatePostulation(int id) {
         if (!postulationRepository.existsById(id)) {
             throw new ResourceNotFoundException("Postulation not found");

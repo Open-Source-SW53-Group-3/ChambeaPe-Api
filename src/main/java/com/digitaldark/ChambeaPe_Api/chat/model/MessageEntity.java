@@ -37,4 +37,8 @@ public class MessageEntity {
 
     @Column(name = "is_active", nullable = false)
     private byte isActive;
+
+    @ManyToOne
+    @JoinColumn(name = "Chat_id", nullable = false, foreignKey = @ForeignKey(name = "FK_CHAT_ID"))
+    private ChatEntity chatEntity;
 }

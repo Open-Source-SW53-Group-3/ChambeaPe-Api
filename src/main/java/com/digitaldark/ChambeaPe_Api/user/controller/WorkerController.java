@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
+//@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1")
 public class WorkerController {
     @Autowired
@@ -32,6 +33,14 @@ public class WorkerController {
     @GetMapping("/workers")
     public ResponseEntity<List<WorkerDTO>> getAllWorkersDTO() {
         return new ResponseEntity<List<WorkerDTO>>(workerService.getAllWorkers(), HttpStatus.OK);
+    }
+
+    //URL: http://localhost:8080/api/v1/workers/{id}
+    //Method: GET
+    @Transactional(readOnly = true)
+    @GetMapping("/workers/{id}")
+    public ResponseEntity<WorkerDTO> getWorkerById(@PathVariable("id") int id) {
+        return new ResponseEntity<WorkerDTO>(workerService.getWorkerById(id), HttpStatus.OK);
     }
 
     //URL: http://localhost:8080/api/v1/workers/{id}

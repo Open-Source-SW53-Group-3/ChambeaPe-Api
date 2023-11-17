@@ -29,6 +29,7 @@ public class PostServiceImpl  implements PostService {
     private DateTimeEntity dateTimeEntity;
 
     /**/
+    @Override
     public PostResponseDTO getPostById(int id) {
         if (!postRepository.existsById(id)) {
             throw new ResourceNotFoundException("Post not found");
@@ -39,6 +40,7 @@ public class PostServiceImpl  implements PostService {
         return modelMapper.map(postEntity, PostResponseDTO.class);
     }
 
+    @Override
     public  List<PostResponseDTO> getAllPosts(){
         List<PostsEntity> postEntities = postRepository.findAll();
 
@@ -47,6 +49,7 @@ public class PostServiceImpl  implements PostService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public  List<PostResponseDTO> getAllPostsByEmployerId(int employerId){
         EmployerEntity employerEntity = employerRepository.findById(employerId);
 
@@ -57,7 +60,7 @@ public class PostServiceImpl  implements PostService {
                 .collect(Collectors.toList());
     }
     /**/
-
+    @Override
     public PostResponseDTO createPost(PostRequestDTO post, int employerId) {
         if(!employerRepository.existsById(employerId)) {
             throw new ResourceNotFoundException("Employer not found");
@@ -75,6 +78,7 @@ public class PostServiceImpl  implements PostService {
         return modelMapper.map(postEntity, PostResponseDTO.class);
     }
 
+    @Override
     public void updatePost(int id, PostRequestDTO post) {
         if(!postRepository.existsById(id)) {
             throw new ResourceNotFoundException("Post not found");
@@ -87,6 +91,7 @@ public class PostServiceImpl  implements PostService {
         postRepository.save(postEntity);
     }
 
+    @Override
     public void deletePost(int id){
         if(!postRepository.existsById(id)) {
             throw new ResourceNotFoundException("Post not found");

@@ -53,6 +53,20 @@ public class WorkerServiceImpl implements WorkerService {
     }
 
     @Override
+    public WorkerDTO getWorkerById(int id) {
+        if (!workerRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Worker not found");
+        }
+
+        WorkerEntity workerEntity = workerRepository.findById(id);
+
+        WorkerDTO workerDTO = modelMapper.map(workerEntity, WorkerDTO.class);
+        modelMapper.map(workerEntity.getUser(), workerDTO);
+
+        return workerDTO;
+    }
+
+    @Override
     public void deleteWorker(int id) {
         if (!workerRepository.existsById(id)) {
             throw new ValidationException("Worker does not exist");

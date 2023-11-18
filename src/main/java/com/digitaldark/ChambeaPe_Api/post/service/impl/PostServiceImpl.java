@@ -12,6 +12,7 @@ import com.digitaldark.ChambeaPe_Api.user.repository.EmployerRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -60,6 +61,7 @@ public class PostServiceImpl  implements PostService {
                 .collect(Collectors.toList());
     }
     /**/
+    @CrossOrigin(origins = "*")
     @Override
     public PostResponseDTO createPost(PostRequestDTO post, int employerId) {
         if(!employerRepository.existsById(employerId)) {

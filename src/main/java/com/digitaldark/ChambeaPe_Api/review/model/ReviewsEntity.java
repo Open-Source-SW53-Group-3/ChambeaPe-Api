@@ -40,6 +40,9 @@ public class ReviewsEntity {
     @Column(name = "is_active", nullable = false)
     private byte isActive;
 
+    @Column(name = "rating", nullable = false)
+    private int rating;
+
     @ManyToOne
     @JoinColumn(name = "Employer_id", nullable = false , foreignKey = @ForeignKey(name = "FK_REVIEWS_EMPLOYER_ID"))
     private EmployerEntity employer;

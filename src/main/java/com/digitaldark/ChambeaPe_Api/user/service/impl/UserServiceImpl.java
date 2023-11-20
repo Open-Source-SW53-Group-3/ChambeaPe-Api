@@ -69,9 +69,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO createUserDTO(UserRequestDTO user) {
-        if (userRepository.existsById(user.getId())) {
-            throw new ValidationException("User already exists");
-        } else if (userRepository.existsByEmailOrPhoneNumber(user.getEmail(), user.getPhoneNumber())) {
+         if (userRepository.existsByEmailOrPhoneNumber(user.getEmail(), user.getPhoneNumber())) {
             throw new ValidationException("Email or phone number already exists");
         }
 

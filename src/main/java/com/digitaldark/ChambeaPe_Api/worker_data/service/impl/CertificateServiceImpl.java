@@ -69,12 +69,16 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public CertificateResponseDTO getCertificateById(int id) {
-        if(!certificateRepository.existsById(id)){
+        Optional<CertificatesEntity> certificateEntityOptional = certificateRepository.findById(id);
+
+        if (certificateEntityOptional.isEmpty()) {
             throw new ValidationException("Certificate does not exist");
         }
-        Optional<CertificatesEntity> certificateEntity = certificateRepository.findById(id);
+
+        CertificatesEntity certificateEntity = certificateEntityOptional.get();
         return modelMapper.map(certificateEntity, CertificateResponseDTO.class);
     }
+
     @Override
     public CertificateResponseDTO updateCertificate(int id, CertificateRequestDTO certificate) {
         if(!certificateRepository.existsById(id)){

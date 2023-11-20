@@ -22,7 +22,7 @@ public class PortfolioEntity {
     private int id;
 
     @Column(name = "image_url", nullable = false)
-    private int imageUrl;
+    private String imageUrl;
 
     @Column(name = "Date_created", nullable = false)
     private Timestamp dateCreated;

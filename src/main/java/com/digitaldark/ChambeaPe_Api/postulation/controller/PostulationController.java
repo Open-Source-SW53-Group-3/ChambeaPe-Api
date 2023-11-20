@@ -41,6 +41,7 @@ public class PostulationController {
     @DeleteMapping("/posts/{postId}/postulations/{workerId}")
     public ResponseEntity<Object> deletePostulation(@PathVariable("postId") int postId, @PathVariable("workerId") int workerId) {
         postulationService.deletePostulation(postId, workerId);
+        //return new ResponseEntity<Object>("Postulation deleted successfully",HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

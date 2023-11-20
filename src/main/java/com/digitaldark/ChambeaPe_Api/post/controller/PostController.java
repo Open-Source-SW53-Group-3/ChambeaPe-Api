@@ -57,7 +57,7 @@ public class PostController {
     @DeleteMapping("/posts/{id}")
     public ResponseEntity<Object> deletePost( @PathVariable("id") int id) {
         postService.deletePost(id);
-        return new ResponseEntity<>("Post was deleted successfully",HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //URL: http://localhost:8080/api/v1/posts/{id}
@@ -66,7 +66,7 @@ public class PostController {
     @PutMapping("/posts/{id}")
     public ResponseEntity<Object> updatePost(@PathVariable("id") int id, @RequestBody PostRequestDTO post) {
         postService.updatePost(id, post);
-        return new ResponseEntity<>("Post was updated successfully",HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

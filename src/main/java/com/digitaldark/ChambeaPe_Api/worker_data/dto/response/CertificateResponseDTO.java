@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CertificateResponseDTO {
+    private int id;
     private String userName;
     private String certificateName;
     private String imgUrl;

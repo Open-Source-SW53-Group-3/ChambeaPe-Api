@@ -16,7 +16,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/workers")
-@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
+//@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
+@CrossOrigin(origins = "*")
 public class CertificateController {
     @Autowired
     private CertificateService certificateService;

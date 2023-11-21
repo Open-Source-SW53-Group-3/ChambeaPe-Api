@@ -50,4 +50,4 @@ jobs:
           app-name: 'ChambeaPeApiOpen'
           slot-name: 'Production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C05A17DCAD0B44C59E31FCDA0377BC86 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_173DCC7A91A846A48799D7D65D38EBDB }}

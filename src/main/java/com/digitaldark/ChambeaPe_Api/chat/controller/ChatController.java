@@ -6,6 +6,11 @@ import com.digitaldark.ChambeaPe_Api.chat.dto.request.MessageRequestDTO;
 import com.digitaldark.ChambeaPe_Api.chat.dto.response.ChatResponseDTO;
 import com.digitaldark.ChambeaPe_Api.chat.dto.response.MessageResponseDTO;
 import com.digitaldark.ChambeaPe_Api.chat.service.ChatService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "ChatController", description = "Controller to handle Chat")
 @RestController
 @RequestMapping("/api/v1")
 //@CrossOrigin(origins = "http://localhost:4200") // Puerto de Angular
@@ -24,6 +30,11 @@ public class ChatController {
 
     //URL: http://localhost:8080/api/v1/chats/users/{userId}
     //Method: GET
+    @Operation(summary = "Get all chats by user id")
+    @ApiResponse(responseCode = "201",
+            description = "Successful operation, returning all chats by user id",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ChatDTO.class)))
     @Transactional(readOnly = true)
     @GetMapping("/chats/users/{userId}")
     public ResponseEntity<List<ChatDTO>> getAllChatsByUserId(@PathVariable("userId") int userId) {
@@ -32,6 +43,11 @@ public class ChatController {
 
     //URL: http://localhost:8080/api/v1/chats
     //Method: POST
+    @Operation(summary = "Create chat")
+    @ApiResponse(responseCode = "201",
+            description = "Successful operation, returning created chat",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = ChatResponseDTO.class)))
     @Transactional
     @PostMapping("/chats")
     public ResponseEntity<ChatResponseDTO> createChat(@RequestBody ChatRequestDTO chat) {
@@ -40,6 +56,11 @@ public class ChatController {
 
     //URL: http://localhost:8080/api/v1/chats/{chatId}/messages
     //Method: POST
+    @Operation(summary = "Create message")
+    @ApiResponse(responseCode = "201",
+            description = "Successful operation, returning created message",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = MessageResponseDTO.class)))
     @Transactional
     @PostMapping("/chats/{chatId}/messages")
     public ResponseEntity<MessageResponseDTO> createMessage(@RequestBody MessageRequestDTO message, @PathVariable("chatId") int chatId) {

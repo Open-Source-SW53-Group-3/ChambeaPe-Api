@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("*")
+@RequestMapping("/api/v1/workers")
+@CrossOrigin(origins = "*")
 public class SkillController {
     @Autowired
     private SkillService skillService;
